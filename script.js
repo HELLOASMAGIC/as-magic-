@@ -1223,6 +1223,69 @@ function loadFromRoute() {
     const path =
       window.location.pathname;
   
+    const hash =
+      location.hash;
+  
+  
+    /* =========================================
+       HOME / SECTION NAVIGATION
+    ========================================= */
+  
+    if (
+      hash === "#home" ||
+      hash === "#products" ||
+      hash === "#faq" ||
+      hash === "#contact"
+    ) {
+  
+      $("#productView").hidden =
+        true;
+  
+      $("#homeView").hidden =
+        false;
+  
+      updateHomeSEO();
+  
+  
+      if (
+        hash === "#products" ||
+        hash === "#faq" ||
+        hash === "#contact"
+      ) {
+  
+        setTimeout(() => {
+  
+          const target =
+            document.querySelector(hash);
+  
+          if (target) {
+  
+            target.scrollIntoView({
+              behavior: "smooth",
+              block: "start"
+            });
+  
+          }
+  
+        }, 0);
+  
+      } else {
+  
+        window.scrollTo({
+          top: 0,
+          behavior: "instant"
+        });
+  
+      }
+  
+      return;
+    }
+  
+  
+    /* =========================================
+       PRODUCT URL
+    ========================================= */
+  
     if (
       path.startsWith("/products/")
     ) {
@@ -1240,6 +1303,11 @@ function loadFromRoute() {
       return;
     }
   
+  
+    /* =========================================
+       NORMAL HOME
+    ========================================= */
+  
     $("#productView").hidden =
       true;
   
@@ -1247,36 +1315,6 @@ function loadFromRoute() {
       false;
   
     updateHomeSEO();
-  
-    const hash =
-      location.hash;
-  
-    if (
-      hash === "#products" ||
-      hash === "#faq" ||
-      hash === "#contact"
-    ) {
-  
-      setTimeout(() => {
-  
-        const target =
-          document.querySelector(
-            hash
-          );
-  
-        if (target) {
-  
-          target.scrollIntoView({
-            behavior: "smooth",
-            block: "start"
-          });
-  
-        }
-  
-      }, 0);
-  
-      return;
-    }
   
     window.scrollTo({
       top: 0,
