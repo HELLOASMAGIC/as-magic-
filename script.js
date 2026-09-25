@@ -28,7 +28,7 @@ function setMetaDescription(description) {
             "@type": "Brand",
             "name": CONFIG.brand.name
           },
-          "url": `https://asmagic.in/#product/${product.id}`,
+          "url": `https://asmagic.in/products/${product.id}`,
           "offers": {
             "@type": "AggregateOffer",
             "priceCurrency": "INR",
@@ -415,18 +415,18 @@ const $ = selector =>
       updateProductSEO(product);
       
       if (updateHash) {
-  
-      history.pushState(
-        {
-          product:
-            productId
-        },
-        "",
-        "#product/" +
-        productId
-      );
-  
-    }
+
+        history.pushState(
+          {
+            product:
+              productId
+          },
+          "",
+          "/products/" +
+          productId
+        );
+      
+      }
   
   
     window.scrollTo({
@@ -1190,7 +1190,7 @@ function setupPolicies() {
       history.pushState(
         {},
         "",
-        "#home"
+        "/"
       );
       
       updateHomeSEO();
@@ -1214,26 +1214,23 @@ function setupPolicies() {
   }
   
   
-  /* =====================================================
-   HASH ROUTING
+/* =====================================================
+   PRODUCT URL ROUTING
 ===================================================== */
 
-function loadFromHash() {
+function loadFromRoute() {
 
-    const hash =
-      location.hash;
+    const path =
+      window.location.pathname;
   
     if (
-      hash.startsWith(
-        "#product/"
-      )
+      path.startsWith("/products/")
     ) {
   
       const id =
-        hash.replace(
-          "#product/",
-          ""
-        );
+        path
+          .replace("/products/", "")
+          .replace(/\/$/, "");
   
       openProduct(
         id,
@@ -1241,17 +1238,19 @@ function loadFromHash() {
       );
   
       return;
-  
     }
   
     $("#productView").hidden =
-  true;
-
+      true;
+  
     $("#homeView").hidden =
-  false;
-
+      false;
+  
     updateHomeSEO();
-
+  
+    const hash =
+      location.hash;
+  
     if (
       hash === "#products" ||
       hash === "#faq" ||
@@ -1277,7 +1276,6 @@ function loadFromHash() {
       }, 0);
   
       return;
-  
     }
   
     window.scrollTo({
@@ -1290,13 +1288,13 @@ function loadFromHash() {
   
   window.addEventListener(
     "popstate",
-    loadFromHash
+    loadFromRoute
   );
   
   
   window.addEventListener(
     "hashchange",
-    loadFromHash
+    loadFromRoute
   );
   
   
@@ -1374,7 +1372,7 @@ function loadFromHash() {
   
       setupMobileMenu();
   
-      loadFromHash();
+      loadFromRoute();
   
     }
   );
